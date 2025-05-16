@@ -2,26 +2,24 @@ package com.spring.starter.supamenu.dtos.request;
 
 import com.spring.starter.supamenu.enums.EMenu;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.Getter;
 
-import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.util.List;
 
-
-@Getter
-public class UpdateMenuDTO {
+@Data
+public class MenuDTO {
     @NotBlank
     private String name;
 
-    @NotBlank
     private String description;
 
-    @NotBlank
+    @NotNull
     private BigDecimal price;
 
+    @NotNull
     private EMenu type;
 
-    private List<String> pictures;
+    private String pictures;
 }

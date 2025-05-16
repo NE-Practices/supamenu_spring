@@ -1,5 +1,6 @@
 package com.spring.starter.supamenu.services;
 
+import com.spring.starter.supamenu.dtos.request.MenuDTO;
 import com.spring.starter.supamenu.dtos.request.UpdateRestoDTO;
 import com.spring.starter.supamenu.enums.ECuisine;
 import com.spring.starter.supamenu.enums.ERestaurantType;
@@ -19,16 +20,15 @@ public interface IRestoService {
 
     Resto create(Resto resto);
 
-    Resto update(UUID id,UpdateRestoDTO dto);
+    Resto update(UUID id, UpdateRestoDTO dto);
 
     boolean delete(UUID id);
-
-    Page<Resto> getRestoByMenuItem(UUID menuId, Pageable pageable);
 
     Page<Resto> getRestoByType(ERestaurantType type, Pageable pageable);
 
     Page<Resto> getRestoByCuisine(ECuisine cuisine, Pageable pageable);
 
+    Resto addMenuToResto(UUID restoId, MenuDTO menuDTO);
 
-
+    Resto deleteMenuFromResto(UUID restoId, int menuIndex);
 }

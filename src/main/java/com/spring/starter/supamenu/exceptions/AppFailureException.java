@@ -32,4 +32,4 @@ public class AppFailureException {
     public ResponseEntity<ApiResponse> handleSqlExceptions(ConstraintViolationException exception) {
         return ResponseEntity.badRequest().body(ApiResponse.error(exception.getMessage() + " - " + exception.getSQL() + " - " + exception.getSQLState(), exception.getSQLException()));
     }
-}
+}   

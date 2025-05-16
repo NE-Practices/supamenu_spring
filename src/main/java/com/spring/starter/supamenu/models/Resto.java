@@ -1,6 +1,7 @@
 package com.spring.starter.supamenu.models;
 
 import com.spring.starter.supamenu.audits.TimestampAudit;
+import com.spring.starter.supamenu.embeddables.Menu;
 import com.spring.starter.supamenu.enums.ECuisine;
 import com.spring.starter.supamenu.enums.ERestaurantType;
 import jakarta.persistence.*;
@@ -8,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,16 +39,16 @@ public class Resto extends TimestampAudit {
     @ElementCollection
     private List<String> pictures;
 
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MenuItem> menu;
+    @ElementCollection
+    @CollectionTable(name = "resto_menus", joinColumns = @JoinColumn(name = "resto_id"))
+    private List<Menu> menus = new ArrayList<>();
 
-    public Resto(String name, String contactNumber, ECuisine cuisineType, ERestaurantType type, List<String> pictures) {
+    public Resto(String name, String contactNumber, ECuisine cuisineType, ERestaurantType type, List<String> pictures, List<Menu> menus) {
         this.name = name;
         this.contactNumber = contactNumber;
         this.cuisineType = cuisineType;
         this.type = type;
         this.pictures = pictures;
+        this.menus = menus != null ? menus : new ArrayList<>();
     }
-
-
 }

@@ -1,18 +1,16 @@
 package com.spring.starter.supamenu.repositories;
 
+import com.spring.starter.supamenu.enums.ECuisine;
+import com.spring.starter.supamenu.enums.ERestaurantType;
 import com.spring.starter.supamenu.models.Resto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
 import java.util.UUID;
 
-@Repository
 public interface IRestoRepository extends JpaRepository<Resto, UUID> {
-
-    // Find resto by ownerId (used in getMyResto or user-specific actions)
-//    Optional<Resto> findByOwnerId(UUID ownerId);
-
-    // Optional: if ownerId is a string
-    // Optional<Resto> findByOwnerId(String ownerId);
+    Page<Resto> findByNameContainingIgnoreCase(String name, Pageable pageable);
+    Page<Resto> findByType(ERestaurantType type, Pageable pageable);
+    Page<Resto> findByCuisineType(ECuisine cuisine, Pageable pageable);
 }

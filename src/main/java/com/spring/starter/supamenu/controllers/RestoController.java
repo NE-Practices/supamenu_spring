@@ -1,6 +1,7 @@
 package com.spring.starter.supamenu.controllers;
 
 import com.spring.starter.supamenu.dtos.request.CreateRestoDTO;
+import com.spring.starter.supamenu.dtos.request.MenuDTO;
 import com.spring.starter.supamenu.dtos.request.UpdateRestoDTO;
 import com.spring.starter.supamenu.dtos.response.ApiResponse;
 import com.spring.starter.supamenu.models.Resto;
@@ -40,7 +41,14 @@ public class RestoController {
 
     @PostMapping
     public ResponseEntity<ApiResponse> createResto(@Valid @RequestBody CreateRestoDTO dto) {
-        Resto resto = new Resto(dto.getName(),dto.getContactNumber(),dto.getCuisineType(),dto.getType(),dto.getPictures());
+        Resto resto = new Resto(
+                dto.getName(),
+                dto.getContactNumber(),
+                dto.getCuisineType(),
+                dto.getType(),
+                dto.getPictures(),
+                dto.getMenus()
+        );
         return ResponseEntity.ok(ApiResponse.success("Resto created", restoService.create(resto)));
     }
 
@@ -52,5 +60,23 @@ public class RestoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> deleteResto(@PathVariable UUID id) {
         return ResponseEntity.ok(ApiResponse.success("Resto deleted", restoService.delete(id)));
+    }
+
+    @PostMapping("/{restoId}/menu")
+    public ResponseEntity<ApiResponse> addMenuToResto(
+            @PathVariable UUID restoId,
+            @Valid @RequestBody MenuDTO menuDTO
+    ) {
+        Resto updatedResto = restoService.addMenuToResto(restoId, menuDTO);
+        return ResponseEntity.ok(ApiResponse.success("Menu added to restaurant", updatedResto));
+    }
+
+    @DeleteMapping("/{restoId}/menu/{menuIndex}")
+    public ResponseEntity<ApiResponse> deleteMenuFromResto(
+            @PathVariable UUID restoId,
+            @PathVariable int menuIndex
+    ) {
+        Resto updatedResto = restoService.deleteMenuFromResto(restoId, menuIndex);
+        return ResponseEntity.ok(ApiResponse.success("Menu removed from restaurant", updatedResto));
     }
 }

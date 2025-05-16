@@ -2,12 +2,14 @@ package com.spring.starter.supamenu.dtos.request;
 
 import com.spring.starter.supamenu.enums.ECuisine;
 import com.spring.starter.supamenu.enums.ERestaurantType;
+import com.spring.starter.supamenu.embeddables.Menu;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 import java.util.List;
 
-@Getter
+@Data
 public class UpdateRestoDTO {
     @NotBlank
     private String name;
@@ -15,9 +17,13 @@ public class UpdateRestoDTO {
     @NotBlank
     private String contactNumber;
 
-    private ERestaurantType type;
-
+    @NotNull
     private ECuisine cuisineType;
 
+    @NotNull
+    private ERestaurantType type;
+
     private List<String> pictures;
+
+    private List<Menu> menus;
 }
